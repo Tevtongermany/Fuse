@@ -1,2 +1,2 @@
-# Cue
-Cue is a free experimental alternative to JMAP that allows you to get POI's from other seasons into UEFN
+# Fuse
+Fuse is a free experimental alternative to JMAP that allows you to get POI's from other seasons into UEFN
