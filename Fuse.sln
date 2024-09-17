@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fuse", "Fuse\Fuse.csproj", "{AC70D57F-215B-4532-88AC-4F58FE5A9694}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fuse", "Fuse\Fuse.csproj", "{AC70D57F-215B-4532-88AC-4F58FE5A9694}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CUE4Parse", "Dependencies\CUE4Parse\CUE4Parse\CUE4Parse.csproj", "{95AB8D68-A33C-4919-8E22-8E7CFFEAA724}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CUE4Parse-Conversion", "Dependencies\CUE4Parse\CUE4Parse-Conversion\CUE4Parse-Conversion.csproj", "{83DF454C-69C5-4679-976E-6CDE789014A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{AC70D57F-215B-4532-88AC-4F58FE5A9694}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC70D57F-215B-4532-88AC-4F58FE5A9694}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC70D57F-215B-4532-88AC-4F58FE5A9694}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95AB8D68-A33C-4919-8E22-8E7CFFEAA724}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95AB8D68-A33C-4919-8E22-8E7CFFEAA724}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95AB8D68-A33C-4919-8E22-8E7CFFEAA724}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95AB8D68-A33C-4919-8E22-8E7CFFEAA724}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83DF454C-69C5-4679-976E-6CDE789014A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83DF454C-69C5-4679-976E-6CDE789014A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83DF454C-69C5-4679-976E-6CDE789014A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83DF454C-69C5-4679-976E-6CDE789014A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
