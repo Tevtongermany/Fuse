@@ -1,12 +1,17 @@
 using Avalonia.Controls;
+using Fuse.ViewModels;
+using System;
 
-namespace Fuse.Views
+namespace Fuse.Views;
+
+public partial class MainWindow : ViewBase<MainWindowViewModel>
 {
-    public partial class MainWindow : Window
+    public MainWindow()
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
+    private void TabControl_SelectionChanged(object? sender, SelectionChangedEventArgs e)
+    {
+        ViewModel.ActiveTab = (UserControl) sender!;
     }
 }

@@ -15,5 +15,6 @@ public partial class FortniteFileInstallation : ObservableObject
     [ObservableProperty] string versionName = string.Empty;
     [ObservableProperty] EGame gameVersion = EGame.GAME_UE4_27;
     [ObservableProperty] List<AesKey> aesKeys = new();
+    [ObservableProperty] string installPath = string.Empty;
 }
 

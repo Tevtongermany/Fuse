@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="Controls\Avalonia\" />
-    <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
     <ProjectReference Include="..\Dependencies\CUE4Parse\CUE4Parse-Conversion\CUE4Parse-Conversion.csproj" />
     <ProjectReference Include="..\Dependencies\CUE4Parse\CUE4Parse\CUE4Parse.csproj" />
@@ -20,11 +19,11 @@
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.0.7" />
     <PackageReference Include="Avalonia.Desktop" Version="11.0.7" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="11.0.7" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.7" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.7" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.7" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.7" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-<Window xmlns="https://github.com/avaloniaui"
+<UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Fuse.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,15 +6,30 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Fuse.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="Fuse">
+        >
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-</Window>
+	<Grid>
+		<TabControl Margin="0 8" TabStripPlacement="Left" SelectionChanged="TabControl_SelectionChanged" >
+			<TabItem>
+				<TabItem.Header>
+					<TextBlock Text="{Binding Greeting}"/>
+				</TabItem.Header>
+				<vm:HomeViewModel/>
+			</TabItem>
+			<TabItem>
+				<TabItem.Header>
+					import
+				</TabItem.Header>
+			</TabItem>
+			<TabItem>
+				<TabItem.Header>
+					Validate
+				</TabItem.Header>
+			</TabItem>
+		</TabControl>
+	</Grid>
+</UserControl>
