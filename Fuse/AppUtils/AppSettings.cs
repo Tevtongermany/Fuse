@@ -8,8 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Fuse.Models;
 
-namespace Fuse.App;
+namespace Fuse.AppUtils;
 
 // this is the most goated thing Half has written 🙏
 
@@ -35,19 +36,9 @@ public partial class AppSettings : ObservableObject
         File.WriteAllText(FilePath.FullName, JsonConvert.SerializeObject(Current, Formatting.Indented));
     }
 
-    [ObservableProperty] private EGame fnVersion = EGame.GAME_UE5_4;
-    [ObservableProperty] private List<CustomAESKey> customAESKeys = new List<CustomAESKey>();
+    [ObservableProperty] int selectedInstallation = 0;
+    [ObservableProperty] List<FortniteFileInstallation> installs = new();
+
 
 }
 
-public partial class CustomAESKey : ObservableObject
-{
-    public static CustomAESKey ZERO => new(Globals.ZERO_CHAR);
-
-    [ObservableProperty] private string hex;
-
-    public CustomAESKey(string hex)
-    {
-        Hex = hex;
-    }
-}
