@@ -10,8 +10,5 @@ public partial class MainWindow : ViewBase<MainWindowViewModel>
     {
         InitializeComponent();
     }
-    private void TabControl_SelectionChanged(object? sender, SelectionChangedEventArgs e)
-    {
-        ViewModel.ActiveTab = (UserControl) sender!;
-    }
+
 }

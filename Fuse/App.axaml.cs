@@ -14,21 +14,19 @@ namespace Fuse
 {
     public partial class App : Application
     {
+
         public static AppViewModel AppVM = null!;
         public static MainWindowViewModel MainVM => ViewModelRegistry.Get<MainWindowViewModel>();
+        public static Cue4ParseViewModel Cue4ParseVM => ViewModelRegistry.Get<Cue4ParseViewModel>();
         public static readonly DirectoryInfo DataFolder = new(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ".data"));
      
-        public App()
-        {
-            
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .CreateLogger();
-            
-        }
+
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+            AppUtils.AppSettings.Load();
+            ViewModelRegistry.Register<Cue4ParseViewModel>();
+
         }
         
         
@@ -46,6 +44,10 @@ namespace Fuse
             
 
             base.OnFrameworkInitializationCompleted();
+        }
+        private void OnExit(object sender, ControlledApplicationLifetimeExitEventArgs e)
+        {
+            AppUtils.AppSettings.Save();
         }
 
     }

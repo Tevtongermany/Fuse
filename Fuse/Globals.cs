@@ -12,4 +12,5 @@ public static class Globals
 {
     public static readonly FGuid ZERO_GUID = new();
     public static readonly string ZERO_CHAR = "0x0000000000000000000000000000000000000000000000000000000000000000";
+
 }

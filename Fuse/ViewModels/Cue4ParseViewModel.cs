@@ -16,13 +16,9 @@ namespace Fuse.ViewModels;
 
 public class Cue4ParseViewModel : ViewModelBase
 {
-    public FuseFileProvider FuseFileProvider;
+    public FuseFileProvider FuseFileProvider = new FuseFileProvider(AppSettings.Current.Installs[0].InstallPath, new VersionContainer(AppSettings.Current.Installs[0].GameVersion));
 
 
-    public Cue4ParseViewModel(FortniteFileInstallation installation)
-    {
-        FuseFileProvider = new FuseFileProvider(installation.InstallPath, new VersionContainer(installation.GameVersion));
-    }
     public async Task Initialize()
     {
         var oodlePath = Path.Combine(App.DataFolder.FullName, OodleHelper.OODLE_DLL_NAME);
@@ -31,4 +27,5 @@ public class Cue4ParseViewModel : ViewModelBase
 
         FuseFileProvider.Initialize();
     }
+
 }

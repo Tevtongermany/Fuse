@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Fuse.Models;
+using Serilog;
 
 namespace Fuse.AppUtils;
 
@@ -21,8 +22,10 @@ public partial class AppSettings : ObservableObject
     public static readonly DirectoryInfo DirectoryPath = new(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Fuse"));
     public static readonly DirectoryInfo FilePath = new(Path.Combine(DirectoryPath.FullName, "AppSettings.json"));
 
+
     public static void Load()
     {
+        if (!DirectoryPath.Exists) DirectoryPath.Create();
         if (File.Exists(FilePath.FullName))
         {
             Current = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(FilePath.FullName));
@@ -30,14 +33,13 @@ public partial class AppSettings : ObservableObject
 
         Current ??= new AppSettings();
     }
-
     public static void Save()
     {
         File.WriteAllText(FilePath.FullName, JsonConvert.SerializeObject(Current, Formatting.Indented));
     }
 
-    [ObservableProperty] int selectedInstallation = 0;
-    [ObservableProperty] List<FortniteFileInstallation> installs = new();
+    [ObservableProperty] private int selectedInstallation = 0;
+    [ObservableProperty] private List<FortniteFileInstallation> installs = new();
 
 
 }

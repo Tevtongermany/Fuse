@@ -1,35 +1,48 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:Fuse.ViewModels"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="Fuse.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
-        >
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:Fuse.ViewModels"
+			 xmlns:views="clr-namespace:Fuse.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="Fuse.Views.MainWindow"
+             x:DataType="vm:MainWindowViewModel"
+			 >
 
 	<Design.DataContext>
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
 
-	<Grid>
-		<TabControl Margin="0 8" TabStripPlacement="Left" SelectionChanged="TabControl_SelectionChanged" >
+	<Grid ShowGridLines="True">
+
+		
+		<TabControl Margin="0 8" TabStripPlacement="Left" Name="SidebarTabControl">
 			<TabItem>
 				<TabItem.Header>
-					<TextBlock Text="{Binding Greeting}"/>
+					<TextBlock Text="Home"/>
 				</TabItem.Header>
-				<vm:HomeViewModel/>
+				<views:HomeWindow/>
 			</TabItem>
 			<TabItem>
 				<TabItem.Header>
-					import
+					Import
 				</TabItem.Header>
+
+
 			</TabItem>
 			<TabItem>
 				<TabItem.Header>
 					Validate
 				</TabItem.Header>
+
+			</TabItem>
+			<TabItem>
+				<TabItem.Header>
+					Debug
+				</TabItem.Header>
+				<views:DebugView/>
 			</TabItem>
 		</TabControl>
+		
 	</Grid>
 </UserControl>
