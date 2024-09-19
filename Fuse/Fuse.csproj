@@ -26,5 +26,6 @@
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="RestSharp" Version="112.0.0" />
+    <PackageReference Include="Serilog" Version="4.0.2-dev-02226" />
   </ItemGroup>
 </Project>

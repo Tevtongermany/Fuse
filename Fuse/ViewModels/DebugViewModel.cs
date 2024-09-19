@@ -35,6 +35,11 @@ public partial class DebugViewModel : ViewModelBase
     }
 
     [RelayCommand]
+    private void Text()
+    {
+        Log.Information("{0}", "Hello");
+    }
+    [RelayCommand]
     private void InsertGameInstallIntoAppSettings()
     {
         FortniteFileInstallation predefInstall = new FortniteFileInstallation();

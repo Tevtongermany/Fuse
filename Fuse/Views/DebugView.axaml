@@ -12,6 +12,7 @@
 		<Button Command="{Binding SaveAppSettingsCommand}" Content="Save AppSettings"/>
 		<Button Command="{Binding InsertGameInstallIntoAppSettingsCommand}" Content="Insert GameInstall Into AppSettings"/>
 		<Button Command="{Binding LoadCueCommand}" Content="load Cue4parse"/>
+		<Button Command="{Binding TextCommand}" Content="FunnyText"/>
 
 
 

@@ -9,11 +9,22 @@ using System.IO;
 using System;
 using Avalonia.Controls;
 using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
+using System.Runtime.InteropServices;
 
 namespace Fuse
 {
     public partial class App : Application
     {
+
+        [DllImport("kernel32")]
+        private static extern bool AllocConsole();
+
+        [DllImport("kernel32.dll")]
+        private static extern IntPtr GetConsoleWindow();
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
         public static AppViewModel AppVM = null!;
         public static MainWindowViewModel MainVM => ViewModelRegistry.Get<MainWindowViewModel>();
@@ -23,9 +34,14 @@ namespace Fuse
 
         public override void Initialize()
         {
-            AvaloniaXamlLoader.Load(this);
+            
             AppUtils.AppSettings.Load();
             ViewModelRegistry.Register<Cue4ParseViewModel>();
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console(theme: AnsiConsoleTheme.Literate)
+                .CreateLogger();
+            AvaloniaXamlLoader.Load(this);
+            AllocConsole();
 
         }
         
