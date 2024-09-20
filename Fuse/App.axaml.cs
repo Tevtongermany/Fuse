@@ -42,6 +42,7 @@ namespace Fuse
                 .CreateLogger();
             AvaloniaXamlLoader.Load(this);
             AllocConsole();
+            DataFolder.Create();
 
         }
         
