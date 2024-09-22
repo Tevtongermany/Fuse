@@ -19,9 +19,9 @@ public static class HMapExporter
     {
         var level = world.PersistentLevel.Load<ULevel>();
         var actors = level?.Actors ?? [];
-        
+
         var builder = new MapBuilder();
-        
+
         builder.Section("Map", () =>
         {
             builder.Section("Level", () =>
@@ -29,7 +29,7 @@ public static class HMapExporter
                 foreach (var lazyActor in actors)
                 {
                     if (lazyActor is null || lazyActor.IsNull) continue;
-            
+
                     var actor = lazyActor.Load();
                     if (actor is null) continue;
 
@@ -38,24 +38,28 @@ public static class HMapExporter
                     var classPath = $"/Script/{source}.{className}";
                     if (actor.Template?.Load() is { } template)
                     {
-                        classPath = template.GetPathName().Replace("Default__", string.Empty).Replace("FortniteGame/Content/","/Game/");
+                        classPath = template.GetPathName().Replace("Default__", string.Empty).Replace("FortniteGame/Content/", "/Game/");
                     }
 
                     var staticMeshComponent = actor.GetOrDefault<UStaticMeshComponent?>("StaticMeshComponent");
 
+                    if (actor.TryGetAllValues(out string?[] textureDataRawPaths, "TextureData"))
+                    {
+                        foreach (var texture in textureDataRawPaths)
+                        {
+                            Log.Information(texture);
+                        }
+
+                    }
 
                     if (classPath.StartsWith("/Script/FortniteGame.FortStaticMeshActor")) // If its just a simple static mesh instead of a actor
                     {
-                        if (staticMeshComponent is null) return;
+                        if (staticMeshComponent is null) continue;
                         var meshactor = staticMeshComponent.GetOrDefault<UStaticMesh>("StaticMesh");
                         var overrideMaterial = staticMeshComponent.GetOrDefault<List<UMaterialInstanceConstant>>("OverrideMaterials");
 
                         if (meshactor is null) continue;
-                        if (actor.Name.Equals("S_Elevation_Ground_Z_58", StringComparison.OrdinalIgnoreCase))
-                        {
-                            Log.Information("Hs");
-                        }
-
+                        
                         builder.Section("Actor", [new HMapProperty("Class", classPath), new HMapProperty("Name", actor.Name),], () =>
                         {
                             builder.Section("Object", [new HMapProperty("Name", "StaticMeshComponent0")], () => // Static Mesh Component
@@ -66,8 +70,8 @@ public static class HMapExporter
                                     int i = 0;
                                     foreach (var material in overrideMaterial)
                                     {
-                                        if (material is null) return;
-                                        builder.Property($"OverrideMaterials({i})",material.GetPathName().Replace("FortniteGame/Content/", "/Game/"));
+                                        if (material is null) continue;
+                                        builder.Property($"OverrideMaterials({i})", material.GetPathName().Replace("FortniteGame/Content/", "/Game/"));
                                         i++;
                                     }
                                 }
@@ -80,25 +84,28 @@ public static class HMapExporter
                                 {
                                     builder.Property("RelativeLocation", RelativeLocation.ToHMap());
 
-                                } else
+                                }
+                                else
                                 {
-                                    builder.Property("RelativeLocation", staticMeshComponent.GetOrDefault("RelativeLocation", FVector.OneVector).ToHMap());
+                                    builder.Property("RelativeLocation", staticMeshComponent.GetOrDefault("RelativeLocation", FVector.ZeroVector).ToHMap());
                                 }
 
                                 if (staticMeshComponent.TryGetValue(out RelativeRotation, "RelativeRotation"))
                                 {
                                     builder.Property("RelativeRotation", RelativeRotation.ToHMap());
 
-                                } else
+                                }
+                                else
                                 {
-                                    builder.Property("RelativeRotation", staticMeshComponent.GetOrDefault("RelativeRotation", FVector.OneVector).ToHMap());
+                                    builder.Property("RelativeRotation", staticMeshComponent.GetOrDefault("RelativeRotation", FRotator.ZeroRotator).ToHMap());
                                 }
 
                                 if (staticMeshComponent.TryGetValue(out RelativeScale3D, "RelativeScale3D"))
                                 {
                                     builder.Property("RelativeScale3D", RelativeScale3D.ToHMap());
 
-                                } else
+                                }
+                                else
                                 {
                                     builder.Property("RelativeScale3D", staticMeshComponent.GetOrDefault("RelativeScale3d", FVector.OneVector).ToHMap());
                                 }
@@ -109,6 +116,11 @@ public static class HMapExporter
 
                         });
 
+                        if (actor.Name.Equals("S_Elevation_Ground_Z_58", StringComparison.OrdinalIgnoreCase))
+                        {
+                            Log.Information("Hs");
+                        }
+
                         continue;
                     }
                     // Actor
@@ -116,7 +128,7 @@ public static class HMapExporter
                     {
                         builder.Property("ActorLabel", $"\"{actor.Name}\"");
                         if (staticMeshComponent is null) return;
-                        var getmirrored = actor.GetOrDefault("bMirrored",false);
+                        var getmirrored = actor.GetOrDefault("bMirrored", false);
 
                         if (getmirrored)
                         {
@@ -158,8 +170,8 @@ public static class HMapExporter
                             return;
 
                         }
-                        
-                        
+
+
 
                         builder.Section("Object", [new HMapProperty("Name", staticMeshComponent.Name)], () =>
                         {
@@ -191,11 +203,16 @@ public static class HMapExporter
                                 builder.Property("RelativeScale3D", staticMeshComponent.GetOrDefault("RelativeScale3d", FVector.OneVector).ToHMap());
                             }
                         });
+
+                        
+
+                        
+
                     });
                 }
             });
         });
-        
+
 
         return builder.ToString();
     }
