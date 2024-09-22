@@ -36,14 +36,13 @@ public static class HMapExporter
                     var className = actor.Class?.Name ?? string.Empty;
                     var source = className.StartsWith("Fort") ? "FortniteGame" : "Engine";
                     var classPath = $"/Script/{source}.{className}";
-
                     if (actor.Template?.Load() is { } template)
                     {
                         classPath = template.GetPathName().Replace("Default__", string.Empty).Replace("FortniteGame/Content/","/Game/");
                     }
 
                     var staticMeshComponent = actor.GetOrDefault<UStaticMeshComponent?>("StaticMeshComponent");
-                    List<String> Hurensohn = ["S_Elevation_Ground_Z_39", "S_Elevation_Ground_Z14236", "S_Elevation_Ground_Z14234", "S_Elevation_Ground_Z_58"];
+
 
                     if (classPath.StartsWith("/Script/FortniteGame.FortStaticMeshActor")) // If its just a simple static mesh instead of a actor
                     {
@@ -52,31 +51,18 @@ public static class HMapExporter
                         var overrideMaterial = staticMeshComponent.GetOrDefault<List<UMaterialInstanceConstant>>("OverrideMaterials");
 
                         if (meshactor is null) continue;
-
-                        foreach (var hund in Hurensohn)
+                        if (actor.Name.Equals("S_Elevation_Ground_Z_58", StringComparison.OrdinalIgnoreCase))
                         {
-                            if (hund == actor.Name)
-                            {
-                                Log.Information("{0}", actor.Name);
-                                Log.Information("{0}", staticMeshComponent.GetOrDefault("RelativeLocation", FVector.OneVector).ToHMap());
-                                Log.Information("{0}", staticMeshComponent.GetOrDefault("RelativeRotation", FRotator.ZeroRotator).ToHMap());
-                                Log.Information("{0}", staticMeshComponent.GetOrDefault("RelativeScale3D", FVector.OneVector).ToHMap());
-                            }
+                            Log.Information("Hs");
                         }
 
-                        Log.Information(actor.Name);
-                        Log.Information("Creating Actor Section");
                         builder.Section("Actor", [new HMapProperty("Class", classPath), new HMapProperty("Name", actor.Name),], () =>
                         {
-                            Log.Information("Creating object Section");
                             builder.Section("Object", [new HMapProperty("Name", "StaticMeshComponent0")], () => // Static Mesh Component
                             {
-                                Log.Information("Creating Static Mesh Section");
                                 builder.Property("StaticMesh", $"\"/Script/Engine.StaticMesh\'{meshactor.GetPathName().Replace("FortniteGame/Content/", "/Game/")}\'\"");
-                                Log.Information("Checking if has override material");
                                 if (overrideMaterial is not null)
                                 {
-                                    Log.Information("has override material adding it");
                                     int i = 0;
                                     foreach (var material in overrideMaterial)
                                     {
@@ -86,16 +72,41 @@ public static class HMapExporter
                                     }
                                 }
 
-                                Log.Information("Adding Location rotation scale data");
-                                builder.Property("RelativeLocation", staticMeshComponent.GetOrDefault("RelativeLocation",FVector.OneVector).ToHMap());
-                                builder.Property("RelativeRotation", staticMeshComponent.GetOrDefault("RelativeRotation", FRotator.ZeroRotator).ToHMap());
-                                builder.Property("RelativeScale3D", staticMeshComponent.GetOrDefault("RelativeScale3D", FVector.OneVector).ToHMap());
+                                FVector RelativeLocation;
+                                FRotator RelativeRotation;
+                                FVector RelativeScale3D;
+
+                                if (staticMeshComponent.TryGetValue(out RelativeLocation, "RelativeLocation"))
+                                {
+                                    builder.Property("RelativeLocation", RelativeLocation.ToHMap());
+
+                                } else
+                                {
+                                    builder.Property("RelativeLocation", staticMeshComponent.GetOrDefault("RelativeLocation", FVector.OneVector).ToHMap());
+                                }
+
+                                if (staticMeshComponent.TryGetValue(out RelativeRotation, "RelativeRotation"))
+                                {
+                                    builder.Property("RelativeRotation", RelativeRotation.ToHMap());
+
+                                } else
+                                {
+                                    builder.Property("RelativeRotation", staticMeshComponent.GetOrDefault("RelativeRotation", FVector.OneVector).ToHMap());
+                                }
+
+                                if (staticMeshComponent.TryGetValue(out RelativeScale3D, "RelativeScale3D"))
+                                {
+                                    builder.Property("RelativeScale3D", RelativeScale3D.ToHMap());
+
+                                } else
+                                {
+                                    builder.Property("RelativeScale3D", staticMeshComponent.GetOrDefault("RelativeScale3d", FVector.OneVector).ToHMap());
+                                }
                             });
-                            Log.Information("adding data");
                             builder.Property("ActorLabel", $"\"{actor.Name}\"");
                             builder.Property("RootComponent", "StaticMeshComponent0");
                             builder.Property("StaticMeshComponent", "StaticMeshComponent0");
-                            Log.Information("");
+
                         });
 
                         continue;
@@ -114,19 +125,33 @@ public static class HMapExporter
                                 FVector RelativeLocation;
                                 FRotator RelativeRotation;
                                 FVector RelativeScale3D;
+
                                 if (staticMeshComponent.TryGetValue(out RelativeLocation, "RelativeLocation"))
                                 {
                                     builder.Property("RelativeLocation", RelativeLocation.ToHMap());
                                 }
+                                else
+                                {
+                                    builder.Property("RelativeLocation", staticMeshComponent.GetOrDefault("RelativeLocation", FVector.OneVector).ToHMap());
+                                }
+
                                 if (staticMeshComponent.TryGetValue(out RelativeRotation, "RelativeRotation"))
                                 {
                                     builder.Property("RelativeRotation", RelativeRotation.ToHMap());
                                 }
+                                else
+                                {
+                                    builder.Property("RelativeRotation", staticMeshComponent.GetOrDefault("RelativeRotation", FVector.OneVector).ToHMap());
+                                }
+
                                 if (staticMeshComponent.TryGetValue(out RelativeScale3D, "RelativeScale3D"))
                                 {
                                     builder.Property("RelativeScale3D", RelativeScale3D.ToHMap());
                                 }
-
+                                else
+                                {
+                                    builder.Property("RelativeScale3D", staticMeshComponent.GetOrDefault("RelativeScale3d", FVector.OneVector).ToHMap());
+                                }
 
                             });
                             builder.Property("bMirrored", getmirrored.ToString());
@@ -145,15 +170,26 @@ public static class HMapExporter
                             {
                                 builder.Property("RelativeLocation", RelativeLocation.ToHMap());
                             }
+                            else
+                            {
+                                builder.Property("RelativeLocation", staticMeshComponent.GetOrDefault("RelativeLocation", FVector.OneVector).ToHMap());
+                            }
                             if (staticMeshComponent.TryGetValue(out RelativeRotation, "RelativeRotation"))
                             {
                                 builder.Property("RelativeRotation", RelativeRotation.ToHMap());
+                            }
+                            else
+                            {
+                                builder.Property("RelativeRotation", staticMeshComponent.GetOrDefault("RelativeRotation", FVector.OneVector).ToHMap());
                             }
                             if (staticMeshComponent.TryGetValue(out RelativeScale3D, "RelativeScale3D"))
                             {
                                 builder.Property("RelativeScale3D", RelativeScale3D.ToHMap());
                             }
-
+                            else
+                            {
+                                builder.Property("RelativeScale3D", staticMeshComponent.GetOrDefault("RelativeScale3d", FVector.OneVector).ToHMap());
+                            }
                         });
                     });
                 }
@@ -169,12 +205,12 @@ public static class HMapExporterExtensions
 {
     public static string ToHMap(this FVector vector)
     {
-        return $"(X={vector.X.ToString().Replace(',', '.'):0.0000000},Y={vector.Y.ToString().Replace(',', '.'):0.0000000},Z={vector.Z.ToString().Replace(',', '.'):0.0000000})";
+        return $"(X={vector.X.ToString().Replace(',', '.')},Y={vector.Y.ToString().Replace(',', '.')},Z={vector.Z.ToString().Replace(',', '.')})";
     }
 
     public static string ToHMap(this FRotator rotator)
     {
-        return $"(Pitch={rotator.Pitch.ToString().Replace(',', '.'):0.0000000},Yaw={rotator.Yaw.ToString().Replace(',', '.'):0.0000000},Roll={rotator.Roll.ToString().Replace(',', '.'):0.0000000})";
+        return $"(Pitch={rotator.Pitch.ToString().Replace(',', '.')},Yaw={rotator.Yaw.ToString().Replace(',', '.')},Roll={rotator.Roll.ToString().Replace(',', '.')})";
     }
 }
 
