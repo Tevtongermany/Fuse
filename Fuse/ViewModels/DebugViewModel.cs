@@ -8,14 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using CUE4Parse.UE4.Versions;
 using Serilog;
+using CUE4Parse.UE4.Objects.Engine;
+using Fuse.Export;
+using System.IO;
+using Avalonia.Controls;
 
 namespace Fuse.ViewModels;
 
 public partial class DebugViewModel : ViewModelBase
 {
+
     private string pathtoinstall;
     public string Pathtoinstall
     {  get { return pathtoinstall; } set { pathtoinstall = value; } }
+
     [RelayCommand]
     private void SaveAppSettings()
     {
@@ -39,6 +45,24 @@ public partial class DebugViewModel : ViewModelBase
     {
         Log.Information("{0}", "Hello");
     }
+
+    [RelayCommand]
+    private async Task GimmeAthenaTerrain()
+    {
+        var AthenaTerrain = await App.Cue4ParseVM.FuseFileProvider.TryLoadObjectAsync("FortniteGame/Content/Athena/Maps/Athena_Terrain.Athena_Terrain");
+        
+        Log.Information("{0}", "AthenaTerrain my beloved");
+    }
+
+    [RelayCommand]
+    private async Task ExportPOI()
+    {
+        UWorld bridge = (UWorld)await App.Cue4ParseVM.FuseFileProvider.TryLoadObjectAsync("FortniteGame/Content/Athena/Maps/POI/Athena_POI_Bridge_001.Athena_POI_Bridge_001");
+        string expstring = HMapExporter.Export(bridge);
+        await App.Clipboard.SetTextAsync(expstring);
+        File.WriteAllText($"C:\\Users\\tevtongermany\\Downloads\\{bridge.Name.ToString()}.txt",expstring);
+    }
+
     [RelayCommand]
     private void InsertGameInstallIntoAppSettings()
     {

@@ -1,4 +1,4 @@
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
@@ -11,11 +11,13 @@ using Avalonia.Controls;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 using System.Runtime.InteropServices;
+using Avalonia.Input.Platform;
 
 namespace Fuse
 {
     public partial class App : Application
     {
+        public static IClassicDesktopStyleApplicationLifetime Application; // This shit is so ass 💔
 
         [DllImport("kernel32")]
         private static extern bool AllocConsole();
@@ -26,10 +28,15 @@ namespace Fuse
         [DllImport("user32.dll")]
         private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
+        public static IClipboard Clipboard => Application.MainWindow.Clipboard!;
+
         public static AppViewModel AppVM = null!;
+
         public static MainWindowViewModel MainVM => ViewModelRegistry.Get<MainWindowViewModel>();
+
         public static Cue4ParseViewModel Cue4ParseVM => ViewModelRegistry.Get<Cue4ParseViewModel>();
         public static readonly DirectoryInfo DataFolder = new(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ".data"));
+
      
 
         public override void Initialize()
@@ -56,6 +63,7 @@ namespace Fuse
                 BindingPlugins.DataValidators.RemoveAt(0);
                 AppVM = new AppViewModel();
                 desktop.MainWindow = new AppWindow();
+                Application = desktop;
 
             }
             

@@ -13,6 +13,8 @@
 		<Button Command="{Binding InsertGameInstallIntoAppSettingsCommand}" Content="Insert GameInstall Into AppSettings"/>
 		<Button Command="{Binding LoadCueCommand}" Content="load Cue4parse"/>
 		<Button Command="{Binding TextCommand}" Content="FunnyText"/>
+		<Button Command="{Binding GimmeAthenaTerrainCommand}" Content="Athena my beloved"/>
+		<Button Command="{Binding ExportPOICommand}" Content="Export POI"/>
 
 
 
