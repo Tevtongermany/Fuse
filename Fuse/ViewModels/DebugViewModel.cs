@@ -57,7 +57,7 @@ public partial class DebugViewModel : ViewModelBase
     [RelayCommand]
     private async Task ExportPOI()
     {
-        UWorld bridge = (UWorld)await App.Cue4ParseVM.FuseFileProvider.TryLoadObjectAsync("FortniteGame/Content/Athena/Maps/POI/Athena_POI_Bridge_001.Athena_POI_Bridge_001");
+        UWorld bridge = (UWorld)await App.Cue4ParseVM.FuseFileProvider.TryLoadObjectAsync("FortniteGame/Content/Athena/Maps/POI/Athena_POI_LakeIsland_001.Athena_POI_LakeIsland_001");
         string expstring = HMapExporter.Export(bridge);
         await App.Clipboard.SetTextAsync(expstring);
         File.WriteAllText($"C:\\Users\\tevtongermany\\Downloads\\{bridge.Name.ToString()}.txt",expstring);

@@ -1,46 +1,26 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CUE4Parse.UE4.Versions;
 using Newtonsoft.Json;
-using Org.BouncyCastle.Utilities.Encoders;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fuse.Models;
-using Serilog;
+using Fuse.ViewModels;
 
 namespace Fuse.AppUtils;
 
 // this is the most goated thing Half has written 🙏
-
 public partial class AppSettings : ObservableObject
 {
-    public static AppSettings Current;
+    public static SettingsViewModel Current = new();
 
-    public static readonly DirectoryInfo DirectoryPath = new(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Fuse"));
-    public static readonly DirectoryInfo FilePath = new(Path.Combine(DirectoryPath.FullName, "AppSettings.json"));
-
+    private static readonly string DirectoryPath = new(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Fuse"));
+    private static readonly string FilePath = new(Path.Combine(DirectoryPath, "AppSettings.json"));
 
     public static void Load()
     {
-        if (!DirectoryPath.Exists) DirectoryPath.Create();
-        if (File.Exists(FilePath.FullName))
-        {
-            Current = JsonConvert.DeserializeObject<AppSettings>(File.ReadAllText(FilePath.FullName));
-        }
-
-        Current ??= new AppSettings();
+        if (!Directory.Exists(DirectoryPath)) Directory.CreateDirectory(DirectoryPath);
+        if (File.Exists(FilePath)) Current = JsonConvert.DeserializeObject<SettingsViewModel>(File.ReadAllText(FilePath)) ?? new SettingsViewModel();
     }
     public static void Save()
     {
-        File.WriteAllText(FilePath.FullName, JsonConvert.SerializeObject(Current, Formatting.Indented));
+        File.WriteAllText(FilePath, JsonConvert.SerializeObject(Current, Formatting.Indented));
     }
-
-    [ObservableProperty] private int selectedInstallation = 0;
-    [ObservableProperty] private List<FortniteFileInstallation> installs = new();
-
-
 }
-

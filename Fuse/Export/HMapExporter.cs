@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using CUE4Parse.UE4.Assets.Exports;
 using CUE4Parse.UE4.Assets.Exports.Component.StaticMesh;
 using CUE4Parse.UE4.Assets.Exports.Material;
 using CUE4Parse.UE4.Assets.Exports.StaticMesh;
@@ -9,6 +10,7 @@ using CUE4Parse.UE4.Objects.Core.Math;
 using CUE4Parse.UE4.Objects.Engine;
 using CUE4Parse.UE4.Objects.UObject;
 using Serilog;
+using SharpGLTF.Schema2;
 
 
 namespace Fuse.Export;
@@ -43,14 +45,7 @@ public static class HMapExporter
 
                     var staticMeshComponent = actor.GetOrDefault<UStaticMeshComponent?>("StaticMeshComponent");
 
-                    if (actor.TryGetAllValues(out string?[] textureDataRawPaths, "TextureData"))
-                    {
-                        foreach (var texture in textureDataRawPaths)
-                        {
-                            Log.Information(texture);
-                        }
 
-                    }
 
                     if (classPath.StartsWith("/Script/FortniteGame.FortStaticMeshActor")) // If its just a simple static mesh instead of a actor
                     {
@@ -130,6 +125,8 @@ public static class HMapExporter
                         if (staticMeshComponent is null) return;
                         var getmirrored = actor.GetOrDefault("bMirrored", false);
 
+                        
+
                         if (getmirrored)
                         {
                             builder.Section("Object", [new HMapProperty("Name", staticMeshComponent.Name)], () =>
@@ -204,10 +201,30 @@ public static class HMapExporter
                             }
                         });
 
-                        
 
-                        
 
+                        UObject[] textureDataRawPaths;
+                        if (actor.TryGetAllValues<UObject>(out textureDataRawPaths, "TextureData"))
+                        {
+                            if (actor.Name == "BrickSimple_RoofWall2")
+                            {
+                                Log.Information("");
+                            }
+                            int i = 0;
+                            foreach (var texture in textureDataRawPaths)
+                            {
+                                if (texture is null)
+                                {
+                                    i++;
+                                    continue;
+
+                                }
+                                builder.Property($"TextureData({i})", $"\"/Script/FortniteGame.BuildingTextureData\'{texture.GetPathName().Replace("FortniteGame/Content/", "/Game/").Replace("/Diffuses/","/")}\'\"");
+                                i++;
+
+                            }
+                            Log.Information("{0}", $" ");
+                        }
                     });
                 }
             });
