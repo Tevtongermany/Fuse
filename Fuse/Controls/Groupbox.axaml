@@ -1,0 +1,25 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:Fuse.Controls"
+             x:Class="Fuse.Controls.Groupbox"
+             x:DataType="controls:Groupbox" Background="#10FFFFFF" BorderBrush="#10FFFFFF" CornerRadius="10">
+	
+	<UserControl.Styles>
+		<Style Selector="controls|Groupbox">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type controls:Groupbox}">
+						<Grid>
+							<Border RenderOptions.EdgeMode="Antialias" CornerRadius="{TemplateBinding CornerRadius}"
+                                    Background="{TemplateBinding Background}" />
+							<Border RenderOptions.EdgeMode="Antialias" CornerRadius="{TemplateBinding CornerRadius}"
+                                    BorderThickness="1" BorderBrush="{TemplateBinding BorderBrush}" />
+							<ContentControl Content="{TemplateBinding Content}" Margin="10"/>
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</UserControl.Styles>
+
+</UserControl>

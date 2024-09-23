@@ -5,21 +5,26 @@
 		xmlns:vm="clr-namespace:Fuse.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Fuse.Views.HomeWindow"
-	    x:DataType="vm:HomeViewModel">
+	    x:DataType="vm:HomeViewModel"
+		xmlns:controls="clr-namespace:Fuse.Controls">
 	
-	<Grid ShowGridLines="False">
+	<Grid ShowGridLines="True">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="100"></ColumnDefinition>
 			<ColumnDefinition Width="*"></ColumnDefinition>
+			<ColumnDefinition Width="*"></ColumnDefinition>
 			<ColumnDefinition Width="100"></ColumnDefinition>
-
+			
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="10"></RowDefinition>
 			<RowDefinition Height="100"></RowDefinition>
 			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="100"></RowDefinition>
+			<RowDefinition Height="20"></RowDefinition>
 		</Grid.RowDefinitions>
-		<Grid Grid.Row="1" Grid.Column="1">
+		
+		<Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
 			<Border  CornerRadius="10" Padding="">
 				<Border.Background>
 					<ImageBrush Source="/Assets/Banner.png" Stretch="UniformToFill"/>
@@ -28,7 +33,31 @@
 			<TextBlock Text="Welcome" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"></TextBlock>
 		</Grid>
 
+		<controls:Groupbox Grid.Row="3" Grid.Column="1">
+			<Grid ShowGridLines="True">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="70"></ColumnDefinition>
+					<ColumnDefinition Width="80"></ColumnDefinition>
 
+
+				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="30"></RowDefinition>
+					<RowDefinition Height="*"></RowDefinition>
+
+				</Grid.RowDefinitions>
+				
+				<Border CornerRadius="2" Grid.RowSpan="6">
+					<Border.Background>
+						<ImageBrush Source="/Assets/stw.jpg" Stretch="UniformToFill"/>
+					</Border.Background>
+				</Border>
+				<TextBlock Grid.Column="1" Text="3.0" Margin="5" VerticalAlignment="Center"/>
+				<TextBlock Grid.Column="1" Grid.Row="2" Text="UE 4.27" Margin="5"  VerticalAlignment="Top"/>
+			</Grid>
+
+		</controls:Groupbox>
+		
 	</Grid>
 
 
