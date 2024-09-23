@@ -6,9 +6,29 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Fuse.Views.HomeWindow"
 	    x:DataType="vm:HomeViewModel">
-	<Grid>
-		<Button Command="{Binding OnButton}" Content="Haii" Canvas.Top="0"/>
-		<Image Source="/Assets/pig.png"  Canvas.Top="30"/>
+	
+	<Grid ShowGridLines="False">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="100"></ColumnDefinition>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+			<ColumnDefinition Width="100"></ColumnDefinition>
+
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="10"></RowDefinition>
+			<RowDefinition Height="100"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="1" Grid.Column="1">
+			<Border  CornerRadius="10" Padding="">
+				<Border.Background>
+					<ImageBrush Source="/Assets/Banner.png" Stretch="UniformToFill"/>
+				</Border.Background>
+			</Border>
+			<TextBlock Text="Welcome" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"></TextBlock>
+		</Grid>
+
+
 	</Grid>
 
 

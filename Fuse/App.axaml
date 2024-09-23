@@ -11,5 +11,10 @@
   
     <Application.Styles>
         <FluentTheme />
+		<StyleInclude Source="/Assets/Styles.axaml"/>
     </Application.Styles>
+
+	<Application.Resources>
+		<FontFamily x:Key="Belanosima">avares://Fuse/Assets/Font#Belanosima</FontFamily>
+	</Application.Resources>
 </Application>

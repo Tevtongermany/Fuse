@@ -6,7 +6,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Fuse.Views.AppWindow"
 		x:DataType="vm:AppViewModel"
-        Title="AppWindow">
+        Title="Fuse"
+		Icon="/Assets/fuse-icon.ico">
 
 		<TransitioningContentControl Grid.Row="1" Content="{Binding CurrentView}" />
 

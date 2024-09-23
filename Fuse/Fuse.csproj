@@ -11,6 +11,10 @@
   <ItemGroup>
     <Folder Include="Controls\Avalonia\" />
     <AvaloniaResource Include="Assets\**" />
+    <AvaloniaXaml Remove="Assets\Styles.axaml" />
+	  <None Update="Assets\Font\Belanosima.ttf">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
     <ProjectReference Include="..\Dependencies\CUE4Parse\CUE4Parse-Conversion\CUE4Parse-Conversion.csproj" />
     <ProjectReference Include="..\Dependencies\CUE4Parse\CUE4Parse\CUE4Parse.csproj" />
   </ItemGroup>
@@ -27,5 +31,12 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="RestSharp" Version="112.0.0" />
     <PackageReference Include="Serilog" Version="4.0.2-dev-02226" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <AvaloniaResource Update="Assets\Styles.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
   </ItemGroup>
 </Project>

@@ -19,7 +19,8 @@ public static class HMapExporter
 {
     public static string Export(UWorld world)
     {
-        var level = world.PersistentLevel.Load<ULevel>();
+        if (world.PersistentLevel.Load<ULevel>() is not { } level)
+            return "";
         var actors = level?.Actors ?? [];
 
         var builder = new MapBuilder();
@@ -65,7 +66,6 @@ public static class HMapExporter
                                     int i = 0;
                                     foreach (var material in overrideMaterial)
                                     {
-                                        if (material is null) continue;
                                         builder.Property($"OverrideMaterials({i})", material.GetPathName().Replace("FortniteGame/Content/", "/Game/"));
                                         i++;
                                     }

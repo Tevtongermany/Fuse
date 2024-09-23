@@ -15,7 +15,7 @@
 		<Button Command="{Binding TextCommand}" Content="FunnyText"/>
 		<Button Command="{Binding GimmeAthenaTerrainCommand}" Content="Athena my beloved"/>
 		<Button Command="{Binding ExportPOICommand}" Content="Export POI"/>
-
+		<Image Source="/Assets/pig.png" MaxHeight="200"/>
 
 
 		
